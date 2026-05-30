@@ -40,7 +40,7 @@ public class BisOsrsProfileExporter
 		OwnedItemExport owned = EquippedUntradeablesCollector.collect(client, itemManager);
 
 		List<String> notes = new ArrayList<>();
-		notes.add("Exported from RuneLite (BIS OSRS Profile Export v1).");
+		notes.add("Exported from RuneLite (BIS OSRS Quest Exporter v1).");
 		notes.add("Unlocks are not exported in v1 — set them manually in BIS OSRS.");
 		notes.add("Owned items include equipped untradeables only (not bank or inventory).");
 		if (!diaries.isEmpty())

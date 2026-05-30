@@ -1,40 +1,36 @@
-# BIS OSRS Profile Export (RuneLite)
+# BIS OSRS Quest Exporter (RuneLite)
 
-Plugin Hub–compatible RuneLite side panel that **reads** your logged-in player profile and exports it as **BIS OSRS v1 JSON** for manual import on `/recommend`.
+RuneLite side panel that **reads** your logged-in player profile and exports **BIS OSRS v1 JSON** for manual import on `/recommend`.
 
-## Read-only export
+## What it does
 
-This plugin is a **read-only data export tool**. It:
+- Reads game state from the RuneLite client: stats, completed quests, completed diary tiers (selected regions), and equipped untradeables
+- Shows an export summary in the sidebar
+- Exports **JSON only** — copy to clipboard or save to a local file
 
-- reads game state already exposed by the RuneLite client (stats, quest states, varbits, equipped items)
-- shows a summary in the side panel
-- lets you **copy** or **save** JSON locally (clipboard / file chooser)
+## What it does not do
 
-It does **not**:
-
-- send data over the network (no HTTP, WebSocket, or remote calls)
-- automate gameplay or inject input (no mouse/keyboard simulation)
-- modify right-click menus or add in-world menu entries
-- control the client beyond its own sidebar panel buttons
-
-Import the exported file yourself in the BIS OSRS web app — the plugin never contacts BIS OSRS.
+- **No automation** — nothing runs without you clicking panel buttons
+- **No gameplay input** — no mouse/keyboard simulation or client control
+- **No external network calls** — no HTTP, WebSocket, or remote requests; the plugin never contacts BIS OSRS
+- **No bank or inventory scanning** — owned items are equipped untradeables only (equipment tab)
+- **No menu manipulation** — no in-world right-click menu entries
+- **No recommender logic** — import the JSON yourself in the BIS OSRS web app
 
 ## V1 scope
 
 - Combat **stats** (real levels)
 - **Completed quests** mapped to BIS catalog ids
 - **Completed diary tiers** (BIS-catalog regions only, threshold-based varbits)
-- **Equipped untradeables only** (equipment tab)
+- **Equipped untradeables only**
 - `completedUnlockIds` always `[]`
 - Optional extras: `accountType`, `schemaVersionLabel` (ignored by BIS v1 import)
 
-Not included: unlock heuristics, bank/inventory scanning, localhost POST, browser automation, or any recommender logic.
-
 ## Important v1 behaviour
 
-- **`completedUnlockIds` is always `[]`.** BIS OSRS import will replace unlocks with an empty list — set unlocks manually in the web app after import.
-- **Owned items = equipped untradeables only.** Items in inventory or bank are not exported.
-- **Diaries are threshold-based.** Only fully completed tiers in BIS-catalog regions (`karamja`, `kourend_kebos`, `western_provinces`) are exported; partial progress is skipped rather than guessed.
+- **`completedUnlockIds` is always `[]`.** Set unlocks manually in BIS OSRS after import.
+- **Owned items = equipped untradeables only.** Bank and inventory are not scanned.
+- **Diaries are threshold-based.** Only fully completed tiers in BIS-catalog regions (`karamja`, `kourend_kebos`, `western_provinces`) are exported.
 
 ## Development
 
@@ -46,13 +42,13 @@ Requirements: **JDK 11**, IntelliJ IDEA Community (recommended).
 ./gradlew run
 ```
 
-Enable **BIS OSRS Profile Export** in the RuneLite plugin list, open the sidebar panel, click **Refresh preview**, then **Copy BIS OSRS JSON** or **Save BIS OSRS JSON**.
+Enable **BIS OSRS Quest Exporter** in the RuneLite plugin list, open the sidebar panel, click **Refresh preview**, then **Copy BIS OSRS JSON** or **Save BIS OSRS JSON**.
 
 Import the file on BIS OSRS `/recommend` → **Import profile JSON**.
 
 ### Gradle TLS errors
 
-If `./gradlew` fails with `PKIX path building failed` when downloading Gradle or RuneLite dependencies, fix Java trust normally — e.g. install your corporate root CA into the JDK trust store. **Do not** disable TLS globally (`NODE_TLS_REJECT_UNAUTHORIZED=0`).
+If `./gradlew` fails with `PKIX path building failed`, install your corporate root CA into the JDK trust store. Do not disable TLS globally.
 
 ## BIS compatibility
 
@@ -66,7 +62,7 @@ npm run test:plugin-fixtures
 ## Package
 
 - Java package: `net.bisosrs.profileexport`
-- Plugin Hub id: `bis-osrs-profile-export`
+- Plugin Hub id: `bis-osrs-quest-exporter`
 - Main plugin class: `net.bisosrs.profileexport.BisOsrsPlugin`
 
 ## License
@@ -75,56 +71,32 @@ BSD 2-Clause (same as RuneLite). See [LICENSE](LICENSE).
 
 ---
 
-## Plugin Hub submission checklist
+## Plugin Hub submission
 
-Use this before opening a PR to [runelite/plugin-hub](https://github.com/runelite/plugin-hub).
+1. **Fork** [runelite/plugin-hub](https://github.com/runelite/plugin-hub).
+2. **Add a manifest entry** — create `plugins/bis-osrs-quest-exporter` in your fork (see exact contents below).
+3. **Open a PR** against `runelite/plugin-hub` describing the read-only JSON export behaviour.
+4. **Wait for review** — fix any CI failures or reviewer comments, push updates, and update the `commit=` hash in the manifest.
 
-### Repository (required)
+After merge, the plugin appears on the RuneLite Plugin Hub once the hub build runs.
 
-- [ ] **Dedicated public GitHub repository** at repo root (generate from [runelite/example-plugin](https://github.com/runelite/example-plugin/generate) or mirror this project as its own repo — Plugin Hub points at a repo URL, not a monorepo subfolder)
-- [ ] Repository is **public**
-- [ ] [LICENSE](LICENSE) committed — **BSD 2-Clause**
-- [ ] [runelite-plugin.properties](runelite-plugin.properties) at repo root with `plugins=net.bisosrs.profileexport.BisOsrsPlugin` and `build=standard`
-- [ ] Gradle wrapper committed (`gradlew`, `gradlew.bat`, `gradle/wrapper/gradle-wrapper.jar`, `gradle/wrapper/gradle-wrapper.properties`)
-- [ ] `./gradlew test` passes on a clean clone
-- [ ] Optional: `icon.png` at repo root (≤ 48×72 px) for Plugin Hub listing; plugin also loads `/icon.png` from resources if present
+### Manifest entry
 
-### Plugin metadata (required)
+Add file `plugins/bis-osrs-quest-exporter`:
 
-- [ ] `displayName`, `author`, `description`, and `tags` in `runelite-plugin.properties` match `@PluginDescriptor` on `BisOsrsPlugin`
-- [ ] Description states **read-only export** (no automation, no network)
-- [ ] `runeLiteVersion = 'latest.release'` in `build.gradle`
+```
+repository=https://github.com/keefedownes/BIS-OSRS-Quest-Exporter.git
+commit=<full 40-character commit hash after you push>
+```
 
-### Policy / review (required)
-
-- [ ] No external network calls in plugin code
-- [ ] No gameplay automation, simulated input, or menu manipulation
-- [ ] No `@Subscribe` handlers that alter game behaviour — export runs only when the user clicks panel buttons
-- [ ] README clearly documents v1 limitations (`completedUnlockIds`, equipped-only owned items, diary regions)
-
-### Submit to Plugin Hub
-
-1. Fork [runelite/plugin-hub](https://github.com/runelite/plugin-hub).
-2. Create branch; add `plugins/bis-osrs-profile-export` (filename = plugin id) containing:
-   ```
-   repository=https://github.com/YOUR_USER/bis-osrs-profile-export.git
-   commit=<full 40-char commit hash>
-   ```
-3. Open PR against `runelite/plugin-hub` with a short description of the read-only export behaviour.
-4. Fix any CI / “Changes are needed” review comments; update `commit=` hash after each fix.
+Replace `commit=` with the latest commit on `main` after your submission-ready changes are pushed.
 
 ---
 
 ## Release checklist
 
-Before tagging a release or updating the Plugin Hub manifest `commit=` hash:
-
-1. [ ] `./gradlew test` — all unit tests pass
-2. [ ] `./gradlew build` — main sources compile; JAR assembles
-3. [ ] **Manual export/import test**
-   - [ ] `./gradlew run` — enable plugin in dev client
-   - [ ] Log in, open side panel, **Refresh preview** — summary looks correct
-   - [ ] **Copy** or **Save** JSON
-   - [ ] Import JSON on BIS OSRS `/recommend` — stats, quests, diaries, owned items load; unlocks remain manual
-4. [ ] Push to the public plugin repository; copy new commit hash
-5. [ ] Open or update PR on [runelite/plugin-hub](https://github.com/runelite/plugin-hub) with the new `commit=`
+1. [ ] `./gradlew test`
+2. [ ] `./gradlew build`
+3. [ ] Manual export → import on BIS OSRS `/recommend`
+4. [ ] Push to GitHub; update `commit=` in the Plugin Hub manifest
+5. [ ] Open or update PR on [runelite/plugin-hub](https://github.com/runelite/plugin-hub)

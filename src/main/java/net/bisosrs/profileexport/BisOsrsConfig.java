@@ -4,7 +4,7 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
-@ConfigGroup("bis-osrs-profile-export")
+@ConfigGroup("bis-osrs-quest-exporter")
 public interface BisOsrsConfig extends Config
 {
 	@ConfigItem(

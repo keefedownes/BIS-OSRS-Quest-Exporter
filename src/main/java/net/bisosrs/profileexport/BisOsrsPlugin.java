@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 
 @Slf4j
 @PluginDescriptor(
-	name = "BIS OSRS Profile Export",
-	description = "Read-only export of stats, quests, diaries, and equipped untradeables as JSON for BIS OSRS",
+	name = "BIS OSRS Quest Exporter",
+	description = "Read-only JSON export of stats, quests, diaries, and equipped untradeables for BIS OSRS",
 	tags = {"bis", "gear", "export", "profile", "quests", "read-only"}
 )
 public class BisOsrsPlugin extends Plugin
@@ -37,21 +37,21 @@ public class BisOsrsPlugin extends Plugin
 		}
 
 		navButton = NavigationButton.builder()
-			.tooltip("BIS OSRS Export")
+			.tooltip("BIS OSRS Quest Exporter")
 			.icon(icon)
 			.priority(8)
 			.panel(panel)
 			.build();
 
 		clientToolbar.addNavigation(navButton);
-		log.debug("BIS OSRS Profile Export started");
+		log.debug("BIS OSRS Quest Exporter started");
 	}
 
 	@Override
 	protected void shutDown()
 	{
 		clientToolbar.removeNavigation(navButton);
-		log.debug("BIS OSRS Profile Export stopped");
+		log.debug("BIS OSRS Quest Exporter stopped");
 	}
 
 	@Provides

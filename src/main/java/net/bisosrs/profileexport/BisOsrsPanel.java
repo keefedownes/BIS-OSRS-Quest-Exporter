@@ -42,7 +42,7 @@ public class BisOsrsPanel extends PluginPanel
 		setBackground(ColorScheme.DARK_GRAY_COLOR);
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		JLabel title = new JLabel("BIS OSRS Export");
+		JLabel title = new JLabel("BIS OSRS Quest Exporter");
 		title.setForeground(Color.WHITE);
 
 		JPanel summaryPanel = new JPanel(new GridLayout(0, 1, 0, 4));

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "schemaVersionLabel": "2026-05",
+  "quests": [
+    { "id": "dragon_slayer_i", "runeliteQuest": "DRAGON_SLAYER_I" },
+    { "id": "dragon_slayer_ii", "runeliteQuest": "DRAGON_SLAYER_II" },
+    { "id": "monkey_madness_i", "runeliteQuest": "MONKEY_MADNESS_I" },
+    { "id": "lost_city", "runeliteQuest": "LOST_CITY" },
+    { "id": "heroes_quest", "runeliteQuest": "HEROES_QUEST" },
+    { "id": "recipe_for_disaster", "runeliteQuest": "RECIPE_FOR_DISASTER" },
+    { "id": "the_fremennik_trials", "runeliteQuest": "THE_FREMENNIK_TRIALS" },
+    { "id": "the_fremennik_isles", "runeliteQuest": "THE_FREMENNIK_ISLES" },
+    { "id": "animal_magnetism", "runeliteQuest": "ANIMAL_MAGNETISM" },
+    { "id": "song_of_the_elves", "runeliteQuest": "SONG_OF_THE_ELVES" },
+    { "id": "slug_menace", "runeliteQuest": "THE_SLUG_MENACE" },
+    { "id": "priest_in_peril", "runeliteQuest": "PRIEST_IN_PERIL" },
+    { "id": "lunar_diplomacy", "runeliteQuest": "LUNAR_DIPLOMACY" },
+    { "id": "haunted_mine", "runeliteQuest": "HAUNTED_MINE" },
+    { "id": "mage_arena_i", "runeliteQuest": "MAGE_ARENA_I" },
+    { "id": "mage_arena_ii", "runeliteQuest": "MAGE_ARENA_II" },
+    { "id": "kings_ransom", "runeliteQuest": "KINGS_RANSOM" },
+    { "id": "desert_treasure", "runeliteQuest": "DESERT_TREASURE_I" },
+    { "id": "desert_treasure_ii", "runeliteQuest": "DESERT_TREASURE_II" }
+  ],
+  "diaries": [
+    { "id": "karamja", "tiers": ["easy", "medium", "hard", "elite"] },
+    { "id": "kourend_kebos", "tiers": ["easy", "medium", "hard", "elite"] },
+    { "id": "western_provinces", "tiers": ["easy", "medium", "hard", "elite"] }
+  ]
+}

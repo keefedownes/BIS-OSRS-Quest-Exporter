@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "source": "runelite-plugin",
+  "exportedAt": "2026-05-30T18:00:00.000Z",
+  "notes": "Exported from RuneLite (BIS OSRS Profile Export v1). Unlocks are not exported in v1 — set them manually in BIS OSRS. Owned items include equipped untradeables only (not bank or inventory).",
+  "stats": {
+    "attack": 75,
+    "strength": 75,
+    "defence": 70,
+    "ranged": 75,
+    "magic": 75,
+    "prayer": 69,
+    "hitpoints": 80
+  },
+  "completedQuestIds": ["dragon_slayer_i", "recipe_for_disaster"],
+  "completedDiaryTiers": [
+    { "diaryId": "karamja", "tier": "hard" }
+  ],
+  "completedUnlockIds": [],
+  "ownedItemIds": [6570],
+  "ownedItemNames": ["Fire cape"],
+  "ownedItemLines": ["6570", "Fire cape"],
+  "accountType": "ironman",
+  "schemaVersionLabel": "2026-05"
+}

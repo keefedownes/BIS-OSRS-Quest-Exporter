@@ -13,12 +13,12 @@ public final class QuestCollector
 	{
 	}
 
-	public static List<String> collectCompletedQuestIds(Client client)
+	public static List<String> collectCompletedQuestIds(Client client, BisCatalog catalog)
 	{
 		List<String> completed = new ArrayList<>();
-		Map<Quest, String> catalog = BisCatalog.getInstance().questIdsByQuest();
+		Map<Quest, String> questCatalog = catalog.questIdsByQuest();
 
-		for (Map.Entry<Quest, String> entry : catalog.entrySet())
+		for (Map.Entry<Quest, String> entry : questCatalog.entrySet())
 		{
 			Quest quest = entry.getKey();
 			if (quest.getState(client) == QuestState.FINISHED)

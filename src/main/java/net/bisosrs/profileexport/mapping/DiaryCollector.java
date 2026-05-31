@@ -12,7 +12,7 @@ public final class DiaryCollector
 	{
 	}
 
-	public static List<BisOsrsDiaryTier> collectCompletedDiaryTiers(Client client)
+	public static List<BisOsrsDiaryTier> collectCompletedDiaryTiers(Client client, BisCatalog catalog)
 	{
 		List<BisOsrsDiaryTier> completed = new ArrayList<>();
 		if (client == null || client.getGameState() != GameState.LOGGED_IN)
@@ -27,7 +27,7 @@ public final class DiaryCollector
 				continue;
 			}
 
-			if (!BisCatalog.getInstance().diaryIds().contains(threshold.getDiaryId()))
+			if (!catalog.diaryIds().contains(threshold.getDiaryId()))
 			{
 				continue;
 			}

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.bisosrs.profileexport.mapping.AccountTypeMapper;
+import net.bisosrs.profileexport.mapping.BisCatalog;
 import net.bisosrs.profileexport.mapping.DiaryCollector;
 import net.bisosrs.profileexport.mapping.EquippedUntradeablesCollector;
 import net.bisosrs.profileexport.mapping.EquippedUntradeablesCollector.OwnedItemExport;
@@ -26,6 +27,12 @@ public class BisOsrsProfileExporter
 	@Inject
 	private ItemManager itemManager;
 
+	@Inject
+	private BisCatalog bisCatalog;
+
+	@Inject
+	private JsonSerializer jsonSerializer;
+
 	public ExportResult exportProfile()
 	{
 		if (client.getGameState() != GameState.LOGGED_IN)
@@ -35,8 +42,8 @@ public class BisOsrsProfileExporter
 
 		String accountType = AccountTypeMapper.map(client);
 		BisOsrsStats stats = StatsCollector.collect(client);
-		List<String> quests = QuestCollector.collectCompletedQuestIds(client);
-		List<BisOsrsDiaryTier> diaries = DiaryCollector.collectCompletedDiaryTiers(client);
+		List<String> quests = QuestCollector.collectCompletedQuestIds(client, bisCatalog);
+		List<BisOsrsDiaryTier> diaries = DiaryCollector.collectCompletedDiaryTiers(client, bisCatalog);
 		OwnedItemExport owned = EquippedUntradeablesCollector.collect(client, itemManager);
 
 		List<String> notes = new ArrayList<>();
@@ -73,7 +80,7 @@ public class BisOsrsProfileExporter
 			.statusMessage("Ready to copy or save.")
 			.build();
 
-		return ExportResult.success(profile, summary, JsonSerializer.toJson(profile));
+		return ExportResult.success(profile, summary, jsonSerializer.toJson(profile));
 	}
 
 	@lombok.Value

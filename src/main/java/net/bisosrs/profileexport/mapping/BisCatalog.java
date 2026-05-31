@@ -9,37 +9,18 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import net.runelite.api.Quest;
 
+@Singleton
 public final class BisCatalog
 {
-	private static final BisCatalog INSTANCE = load();
-
-	public static BisCatalog getInstance()
-	{
-		return INSTANCE;
-	}
-
 	private final Map<Quest, String> questIdsByQuest;
 	private final List<String> diaryIds;
 
-	private BisCatalog(Map<Quest, String> questIdsByQuest, List<String> diaryIds)
-	{
-		this.questIdsByQuest = questIdsByQuest;
-		this.diaryIds = diaryIds;
-	}
-
-	public Map<Quest, String> questIdsByQuest()
-	{
-		return questIdsByQuest;
-	}
-
-	public List<String> diaryIds()
-	{
-		return diaryIds;
-	}
-
-	private static BisCatalog load()
+	@Inject
+	BisCatalog(Gson gson)
 	{
 		InputStream stream = BisCatalog.class.getResourceAsStream("/bis_catalog.json");
 		if (stream == null)
@@ -47,7 +28,7 @@ public final class BisCatalog
 			throw new IllegalStateException("Missing bis_catalog.json resource");
 		}
 
-		CatalogFile file = new Gson().fromJson(
+		CatalogFile file = gson.fromJson(
 			new InputStreamReader(stream, StandardCharsets.UTF_8),
 			CatalogFile.class
 		);
@@ -70,7 +51,18 @@ public final class BisCatalog
 			? Collections.emptyList()
 			: file.diaries.stream().map(d -> d.id).collect(java.util.stream.Collectors.toList());
 
-		return new BisCatalog(Collections.unmodifiableMap(quests), List.copyOf(diaries));
+		this.questIdsByQuest = Collections.unmodifiableMap(quests);
+		this.diaryIds = List.copyOf(diaries);
+	}
+
+	public Map<Quest, String> questIdsByQuest()
+	{
+		return questIdsByQuest;
+	}
+
+	public List<String> diaryIds()
+	{
+		return diaryIds;
 	}
 
 	private static final class CatalogFile

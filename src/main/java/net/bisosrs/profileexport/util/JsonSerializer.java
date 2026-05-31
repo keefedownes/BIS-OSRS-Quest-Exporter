@@ -1,19 +1,23 @@
 package net.bisosrs.profileexport.util;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import net.bisosrs.profileexport.BisOsrsProfile;
 
+@Singleton
 public final class JsonSerializer
 {
-	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+	private final Gson gson;
 
-	private JsonSerializer()
+	@Inject
+	JsonSerializer(Gson gson)
 	{
+		this.gson = gson.newBuilder().setPrettyPrinting().create();
 	}
 
-	public static String toJson(BisOsrsProfile profile)
+	public String toJson(BisOsrsProfile profile)
 	{
-		return GSON.toJson(profile);
+		return gson.toJson(profile);
 	}
 }
